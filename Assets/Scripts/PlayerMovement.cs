@@ -6,26 +6,52 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     private PlayerControls controls;
-
+    private Rigidbody rb;
     private Vector2 movementInput;
-    //private Vector3 jumpInput;
+    private Vector3 desiredDirection;
 
     [SerializeField]
     private float moveSpeed = 10f;
-    //private float jumpForce = 10f;
+    [SerializeField]
+    private float jumpForce = 10f;
+    [SerializeField]
+    private float turnSpeed = 5f;
+    [SerializeField]
+    private float jumpCd = 2f;
 
     private Vector3 inputDirection;
     private Vector3 moveVector;
     private Quaternion currentRotation;
+    private bool jumpPerformed = false;
+    
 
     void Awake()
     {
+        rb = GetComponent<Rigidbody>();
         controls = new PlayerControls();
+
         controls.Player.Movement.performed += 
             context => movementInput = context.ReadValue<Vector2>();
     }
 
+
+    private void Update()
+    {
+        Move(desiredDirection);
+        Turn(desiredDirection);
+
+        if (controls.Player.Jump.triggered && !jumpPerformed)
+        {
+            JumpInput();
+        }
+    }
+
     void FixedUpdate()
+    {
+       GetDirection();
+    }
+
+    private void GetDirection()
     {
         float h = movementInput.x;
         float v = movementInput.y;
@@ -40,11 +66,10 @@ public class PlayerMovement : MonoBehaviour
         camForward.y = 0f;
         camRight.y = 0f;
 
-        Vector3 desiredDirection = camForward
+         desiredDirection = camForward
             * inputDirection.z + camRight * inputDirection.x;
 
-        Move(desiredDirection);
-        Turn(desiredDirection);
+         
     }
 
     void Move(Vector3 desiredDirection)
@@ -60,12 +85,23 @@ public class PlayerMovement : MonoBehaviour
             || (desiredDirection.z > 0.1 || desiredDirection.z < -0.1))
         {
             currentRotation = Quaternion.LookRotation(desiredDirection);
-            transform.rotation = currentRotation;
+            transform.rotation = Quaternion.Lerp(this.transform.rotation, currentRotation, Time.deltaTime * turnSpeed);
         }
         else
             transform.rotation = currentRotation;
     }
 
+    void JumpInput()
+    {
+        rb.AddForce(Vector3.up * jumpForce);
+        jumpPerformed = true;
+        Invoke("ResetJump", jumpCd);
+    }
+    void ResetJump()
+    {
+        jumpPerformed = false;
+    }
+   
     private void OnEnable()
     {
         controls.Enable();
