@@ -1,15 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private PlayerControls inputActions;
+    private PlayerControls controls;
 
     private Vector2 movementInput;
+    //private Vector3 jumpInput;
 
     [SerializeField]
     private float moveSpeed = 10f;
+    //private float jumpForce = 10f;
 
     private Vector3 inputDirection;
     private Vector3 moveVector;
@@ -17,10 +20,11 @@ public class PlayerMovement : MonoBehaviour
 
     void Awake()
     {
-        inputActions = new PlayerControls();
-        inputActions.Player.Movement.performed += 
+        controls = new PlayerControls();
+        controls.Player.Movement.performed += 
             context => movementInput = context.ReadValue<Vector2>();
     }
+
     void FixedUpdate()
     {
         float h = movementInput.x;
@@ -64,10 +68,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnEnable()
     {
-        inputActions.Enable();
+        controls.Enable();
     }
     private void OnDisable()
     {
-        inputActions.Disable();
+        controls.Disable();
     }
 }

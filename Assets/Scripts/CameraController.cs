@@ -1,4 +1,4 @@
-using System.Collections;
+/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,3 +24,4 @@ public class CameraController : MonoBehaviour
         transform.position = new Vector3(posX, transform.position.y, posZ);
     }
 }
+*/
