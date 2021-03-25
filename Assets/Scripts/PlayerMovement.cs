@@ -13,9 +13,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float moveSpeed = 10f;
     [SerializeField]
-    private float jumpForce = 10f;
-    [SerializeField]
     private float turnSpeed = 5f;
+    [SerializeField]
+    private float jumpForce = 10f;
     [SerializeField]
     private float jumpCd = 2f;
 
@@ -95,7 +95,7 @@ public class PlayerMovement : MonoBehaviour
     {
         rb.AddForce(Vector3.up * jumpForce);
         jumpPerformed = true;
-        Invoke("ResetJump", jumpCd);
+        Invoke(nameof(ResetJump), jumpCd);
     }
     void ResetJump()
     {
