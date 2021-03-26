@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody rb;
     private Vector2 movementInput;
     private Vector3 desiredDirection;
+    private GroundSensor groundSensor;
 
     [SerializeField]
     private float moveSpeed = 10f;
@@ -22,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 inputDirection;
     private Vector3 moveVector;
     private Quaternion currentRotation;
-    private bool jumpPerformed = false;
+    private bool grounded = false;
     
 
     void Awake()
@@ -32,15 +33,17 @@ public class PlayerMovement : MonoBehaviour
 
         controls.Player.Movement.performed += 
             context => movementInput = context.ReadValue<Vector2>();
+        groundSensor = GetComponentInChildren<GroundSensor>();
     }
 
 
     private void Update()
     {
+        GroundCheck();
         Move(desiredDirection);
         Turn(desiredDirection);
 
-        if (controls.Player.Jump.triggered && !jumpPerformed)
+        if (controls.Player.Jump.triggered && grounded)
         {
             JumpInput();
         }
@@ -94,14 +97,8 @@ public class PlayerMovement : MonoBehaviour
     void JumpInput()
     {
         rb.AddForce(Vector3.up * jumpForce);
-        jumpPerformed = true;
-        Invoke(nameof(ResetJump), jumpCd);
     }
-    void ResetJump()
-    {
-        jumpPerformed = false;
-    }
-   
+
     private void OnEnable()
     {
         controls.Enable();
@@ -109,5 +106,18 @@ public class PlayerMovement : MonoBehaviour
     private void OnDisable()
     {
         controls.Disable();
+    }
+
+    void GroundCheck()
+    {
+        if(!grounded && groundSensor.State())
+        {
+            grounded = true;
+        }
+
+        if(grounded && !groundSensor.State())
+        {
+            grounded = false;
+        }
     }
 }
