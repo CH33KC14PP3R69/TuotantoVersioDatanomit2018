@@ -10,15 +10,15 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 movementInput;
     private Vector3 desiredDirection;
     private GroundSensor groundSensor;
-
-    [SerializeField]
-    private float moveSpeed = 10f;
-    [SerializeField]
-    private float turnSpeed = 5f;
-    [SerializeField]
-    private float jumpForce = 500f;
-    [SerializeField]
-    private float jumpCd = 2f;
+    [Header("Punch Setting")]
+    [SerializeField] float punchStrength = 10f;
+    [SerializeField] float rayLength = 10f;
+    [SerializeField] Transform rayCastPos;
+    [Header("Movement Setting")]
+    [SerializeField] private float moveSpeed = 10f;
+    [SerializeField] private float turnSpeed = 5f;
+    [SerializeField] private float jumpForce = 500f;
+    [SerializeField] private float jumpCd = 2f;
 
     private Vector3 inputDirection;
     private Vector3 moveVector;
@@ -46,6 +46,11 @@ public class PlayerMovement : MonoBehaviour
         if (controls.Player.Jump.triggered && grounded)
         {
             JumpInput();
+        }
+
+        if (controls.Player.Punch.triggered)
+        {
+            AttackAction();
         }
     }
 
@@ -93,6 +98,33 @@ public class PlayerMovement : MonoBehaviour
         else
             transform.rotation = currentRotation;
     }
+    void GroundCheck()
+    {
+        if (!grounded && groundSensor.State())
+        {
+            grounded = true;
+        }
+
+        if (grounded && !groundSensor.State())
+        {
+            grounded = false;
+        }
+    }
+    void AttackAction()
+    {
+
+        Ray ray = new Ray(rayCastPos.position, rayCastPos.transform.forward);
+
+        if (Physics.Raycast(ray, out RaycastHit hit, rayLength))
+        {
+           GameObject objecthit = hit.collider.gameObject;
+
+            if (objecthit.GetComponent<Rigidbody>())
+            {
+                objecthit.GetComponent<Rigidbody>().AddForceAtPosition(hit.transform.forward * punchStrength, hit.point);
+            }
+        }
+    }
 
     void JumpInput()
     {
@@ -108,16 +140,4 @@ public class PlayerMovement : MonoBehaviour
         controls.Disable();
     }
 
-    void GroundCheck()
-    {
-        if(!grounded && groundSensor.State())
-        {
-            grounded = true;
-        }
-
-        if(grounded && !groundSensor.State())
-        {
-            grounded = false;
-        }
-    }
 }
