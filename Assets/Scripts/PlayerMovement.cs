@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 desiredDirection;
     private GroundSensor groundSensor;
     [Header("Punch Setting")]
-    [SerializeField] float punchStrength = 10f;
+    [SerializeField] float punchStrength = 100f;
     [SerializeField] float rayLength = 10f;
     [SerializeField] Transform rayCastPos;
     [Header("Movement Setting")]
