@@ -332,11 +332,10 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1929227363}
   - {fileID: 2039920535}
   - {fileID: 1169245714}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &456158100
 MonoBehaviour:
@@ -484,7 +483,7 @@ Transform:
   - {fileID: 1702935116}
   - {fileID: 2145975753}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1054972868
 GameObject:
@@ -596,7 +595,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1109739814
 GameObject:
@@ -689,7 +688,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &1169245713
 GameObject:
@@ -722,7 +721,7 @@ Transform:
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 456158099}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &1169245715
 SphereCollider:
@@ -1153,7 +1152,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 4.5, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 456158099}
+  m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
 --- !u!114 &1929227364
@@ -1200,6 +1199,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7de8395a7f031348925ea055fb67cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  target: {fileID: 456158094}
+  speed: 5
+  pitch: 3
+  offset: {x: 0, y: -4.5, z: 4}
 --- !u!1 &2039920534
 GameObject:
   m_ObjectHideFlags: 0
@@ -1230,7 +1233,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 456158099}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &2039920536
 BoxCollider:
