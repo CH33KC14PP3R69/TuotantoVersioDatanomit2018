@@ -1,27 +1,22 @@
-/*using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    Vector3 velocity;
-    public float smoothTimeZ;
-    public float smootTimeX;
-    public float offsetZ = -10f;
-    public GameObject player;
-    private Vector3 originPos;
-    private void Start()
-    {
-        originPos = transform.position;
-    }
+    public GameObject target;
+    public float speed = 5;
+    public float pitch = 3;
+    public Vector3 offset = new Vector3(0f, -4.5f, 4f);
 
     void FixedUpdate()
     {
-        float posX = Mathf.SmoothDamp
-            (transform.position.x, player.transform.position.x, ref velocity.x, smootTimeX);
-        float posZ = Mathf.SmoothDamp
-            (transform.position.z, player.transform.position.z + offsetZ, ref velocity.z, smoothTimeZ);
-        transform.position = new Vector3(posX, transform.position.y, posZ);
+        // Look
+        var newRotation = Quaternion.LookRotation(target.transform.position - transform.position) * Quaternion.Euler(pitch, 0, 0);
+        transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, speed * Time.deltaTime);
+
+        // Move
+        Vector3 newPosition = target.transform.position - target.transform.forward * offset.z - target.transform.up * offset.y;
+        transform.position = Vector3.Slerp(transform.position, newPosition, Time.deltaTime * speed);
     }
 }
-*/

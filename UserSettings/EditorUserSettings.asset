@@ -9,6 +9,9 @@ EditorUserSettings:
       value: 22424703114646680e0b0227036c6b15050311242b1b2535232c5326ece92021
       flags: 0
     RecentlyUsedScenePath-1:
+      value: 22424703114646680e0b0227036c6c111b07142f1f2b233e2867083debf42d
+      flags: 0
+    RecentlyUsedScenePath-2:
       value: 22424703114646680e0b0227036c791904040c072d3868252320092a
       flags: 0
     vcSharedLogLevel:
@@ -24,4 +27,4 @@ EditorUserSettings:
   m_VCProjectOverlayIcons: 1
   m_VCHierarchyOverlayIcons: 1
   m_VCOtherOverlayIcons: 1
-  m_VCAllowAsyncUpdate: 1
+  m_VCAllowAsyncUpdate: 0
