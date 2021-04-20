@@ -18,7 +18,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float moveSpeed = 10f;
     [SerializeField] private float turnSpeed = 1f;
     [SerializeField] private float jumpForce = 500f;
-    [SerializeField] private float jumpCd = 2f;
+    //[SerializeField] private float jumpCd = 2f;
 
     //private Vector3 inputDirection;
     private Vector3 moveVector;

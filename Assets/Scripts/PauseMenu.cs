@@ -1,26 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
-    public static bool GameIsPaused = false;
+    private PlayerControls controls;
+    public bool GameIsPaused = false;
 
     public GameObject pauseMenuUi;
 
-    void Update()
+    void Awake()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        controls = new PlayerControls();
+        controls.Player.Pause.performed += ctx => TogglePauseMenu();
+    }
+
+    void TogglePauseMenu()
+    {
+        if (GameIsPaused)
         {
-            if (GameIsPaused)
-            {
-                Resume();
-            }else
-            {
-                Pause();
-            }
+            Resume();
         }
+        else
+        {
+            Pause();
+        }
+            
     }
 
     public void Resume()
@@ -45,5 +52,14 @@ public class PauseMenu : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    private void OnEnable()
+    {
+        controls.Enable();
+    }
+    private void OnDisable()
+    {
+        controls.Disable();
     }
 }
