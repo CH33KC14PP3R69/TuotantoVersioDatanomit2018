@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -24,12 +25,16 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 moveVector;
     //private Quaternion currentRotation;
     private bool grounded = false;
+    private int Score;
+    public Text ScoreText;
 
 
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
         controls = new PlayerControls();
+        Score = 0;
+        SetScoreText ();
 
         controls.Player.Movement.performed +=
             context => movementInput = context.ReadValue<Vector2>();
@@ -90,6 +95,8 @@ public class PlayerMovement : MonoBehaviour
             if (objecthit.GetComponent<Rigidbody>())
             {
                 objecthit.GetComponent<Rigidbody>().AddForceAtPosition(this.transform.forward * punchStrength, hit.point);
+                Score = Score + 1;
+                SetScoreText();
             }
         }
     }
@@ -107,5 +114,8 @@ public class PlayerMovement : MonoBehaviour
     {
         controls.Disable();
     }
-
+    void SetScoreText()
+    {
+        ScoreText.text = "Score: " + Score.ToString();
+    }
 }
